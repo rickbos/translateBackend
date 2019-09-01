@@ -60,7 +60,7 @@ public class TranslateBackEndApplication {
 	}
 
 	@GetMapping("/vinSearch")
-	public static String CodeToState(@RequestParam("vin") String vin){
+	public static String vinSearch(@RequestParam("vin") String vin){
 		return VINBackend.searchVin(vin);
 
 	}
