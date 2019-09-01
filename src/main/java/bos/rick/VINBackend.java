@@ -11,8 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.*;
 
-@SpringBootApplication
-@RestController
+
 public class VINBackend {
 
     private static Connection conn_;
@@ -27,16 +26,14 @@ public class VINBackend {
         }
         return conn_;
     }
-    @GetMapping("/resetvin")
+
     public static String Reset(){
         conn_ = null;
         return "reset vin";
     }
-    @GetMapping("/vin")
-    public static String Hello(){
-        return "HELLO IM VINBackend";
-    }
-    @GetMapping("/vinTest")
+
+
+
     public static String Test() {
         StringBuffer sb = new StringBuffer();
         try {
@@ -46,6 +43,8 @@ public class VINBackend {
             while ( rs.next()) {
                 sb.append(rs.getString("vin")+"\n");
             }
+            rs.close();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

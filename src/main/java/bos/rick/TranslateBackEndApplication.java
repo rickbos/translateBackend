@@ -54,5 +54,10 @@ public class TranslateBackEndApplication {
 	public static String requestStateData() {
 		return requestProcessedData(2);
 	}
+
+	@GetMapping("/vinTest")
+	public static String vinTest() {
+		return VINBackend.Test();
+	}
 }
 
