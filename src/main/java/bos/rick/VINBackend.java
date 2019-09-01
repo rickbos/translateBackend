@@ -1,4 +1,6 @@
 package bos.rick;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,16 +38,27 @@ public class VINBackend {
     }
 
 
-
+    private static String ResultSetToJson(ResultSet rs) throws SQLException {
+        JSONArray json = new JSONArray();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        while(rs.next()) {
+            int numColumns = rsmd.getColumnCount();
+            JSONObject obj = new JSONObject();
+            for (int i=1; i<=numColumns; i++) {
+                String column_name = rsmd.getColumnName(i);
+                obj.put(column_name, rs.getObject(column_name));
+            }
+            json.put(obj);
+        }
+        return json.toString();
+    }
     public static String Test() {
         StringBuffer sb = new StringBuffer();
         try {
             Statement st = getConnection().createStatement();
             ResultSet rs = st.executeQuery("select * from vindb.vin");
 
-            while ( rs.next()) {
-                sb.append(rs.getString("vin")+"\n");
-            }
+            sb.append(ResultSetToJson(rs));
             rs.close();
             st.close();
         } catch (SQLException e) {
