@@ -17,7 +17,7 @@ import java.sql.*;
 public class VINBackend {
 
     private static Connection conn_;
-
+    private static PreparedStatement psVin_ ;
     public static Connection getConnection() {
         if (conn_ == null ) {
             try {
@@ -31,9 +31,19 @@ public class VINBackend {
         }
         return conn_;
     }
-
+    public static PreparedStatement getVinPreparedStatement() {
+        if ( psVin_ == null) {
+            try {
+                psVin_ = getConnection().prepareStatement("SELECT * FROM VINDB.VIN where VIN = ?");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+            return psVin_;
+    }
     public static String Reset(){
         conn_ = null;
+        psVin_ = null;
         return "reset vin";
     }
 
@@ -71,12 +81,12 @@ public class VINBackend {
     public static String searchVin(String vin) {
         StringBuffer sb = new StringBuffer();
         try {
-            Statement st = getConnection().createStatement();
-            ResultSet rs = st.executeQuery("select * from vindb.vin where vin = "  + vin);
+           getVinPreparedStatement().setString(1,vin);
+            ResultSet rs = getVinPreparedStatement().executeQuery();
 
             sb.append(ResultSetToJson(rs));
             rs.close();
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
