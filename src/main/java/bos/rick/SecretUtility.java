@@ -10,7 +10,6 @@ public class SecretUtility {
         String value = "";
         try {
             File file = new File("/run/secrets/"+ name);
-            System.out.println("getSecret:" +name+":"+file.getAbsolutePath()+":"+file.exists());
             if ( file.exists()) {
                 BufferedReader br = new BufferedReader( new FileReader(file));
                 StringBuffer sb = new StringBuffer();
