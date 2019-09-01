@@ -50,7 +50,7 @@ public class VINBackend {
             }
             json.put(obj);
         }
-        return json.toString();
+        return json.toString(3);
     }
     public static String Test() {
         StringBuffer sb = new StringBuffer();
