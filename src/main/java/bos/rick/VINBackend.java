@@ -20,7 +20,7 @@ public class VINBackend {
         if (conn_ == null ) {
             try {
                 Class.forName("org.postgresql.Driver");
-                conn_ = DriverManager.getConnection("jdbc:postgresql://mydb:5432/postgres", "rick", "brodie1");
+                conn_ = DriverManager.getConnection("jdbc:postgresql://mydb:5432/rick", "rick", "brodie1");
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
