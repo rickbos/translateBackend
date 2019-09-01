@@ -52,11 +52,27 @@ public class VINBackend {
         }
         return json.toString(3);
     }
-    public static String Test() {
+    public static String allVins() {
         StringBuffer sb = new StringBuffer();
         try {
             Statement st = getConnection().createStatement();
             ResultSet rs = st.executeQuery("select * from vindb.vin");
+
+            sb.append(ResultSetToJson(rs));
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+
+
+    }
+    public static String searchVin(String vin) {
+        StringBuffer sb = new StringBuffer();
+        try {
+            Statement st = getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select * from vindb.vin where vin = "  + vin);
 
             sb.append(ResultSetToJson(rs));
             rs.close();
