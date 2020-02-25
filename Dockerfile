@@ -1,4 +1,4 @@
-# Start with a base image containing Java runtime.
+# Starting with a base image containing Java runtime.
 FROM openjdk:8u212-jdk-slim
 # Add Maintainer Info
 LABEL maintainer="rickbosontario@gmail.com"
